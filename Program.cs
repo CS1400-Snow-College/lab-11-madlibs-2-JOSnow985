@@ -49,17 +49,15 @@ class Program
                             // Check if we're still in the separator
                             if (storyWords[storyIndex][wordListIndex][letterIndex] != ':')
                             {
-                                // Check if we're looking at punctuation, if we aren't, put that character into the key
-                                if (!".,! ".Contains(storyWords[storyIndex][wordListIndex][letterIndex]))
-                                {
-                                    buildKeyToAdd.Append(storyWords[storyIndex][wordListIndex][letterIndex]);
-                                }
                                 // If we are looking at punctuation, split that off to it's own string so it's not in our key
-                                else if (".,! ".Contains(storyWords[storyIndex][wordListIndex][letterIndex]))
+                                if (".,! ".Contains(storyWords[storyIndex][wordListIndex][letterIndex]))
                                 {
                                     // buildWordToAdd.Append(storyWords[storyIndex][wordListIndex][letterIndex]);
                                     storyWords[storyIndex].Insert(wordListIndex + 1, $"{storyWords[storyIndex][wordListIndex][letterIndex]}");
                                 }
+                                // If we aren't looking at punctuation, only thing to do is add it to the key
+                                else
+                                    buildKeyToAdd.Append(storyWords[storyIndex][wordListIndex][letterIndex]);
                             }
                         }
                     }
@@ -86,8 +84,6 @@ class Program
 
         Random rng = new();
 
-        // Action<string> writeOut = Console.Write;
-
         for (int storyIndex = 0; storyIndex < storyWords.Count; storyIndex++)
         {
             using StreamWriter writeOut = new StreamWriter($"generatedstory{storyIndex + 1}.txt", append: false);
@@ -109,49 +105,44 @@ class Program
                     wordListIndex++;
                     wasCapital = true;
                 }
-                
+
                 // Check if the word we're looking at matches a key in the dictionary
                 // If It does, we want to randomly choose a replacement word and supply that word to be written to the file 
                 if (wordCategories.TryGetValue(storyWords[storyIndex][wordListIndex], out List<string>? dictionaryList))
                 {
                     int randomIndex = rng.Next(0, dictionaryList.Count);
-                    currentWord = dictionaryList[randomIndex].Trim();
+                    currentWord = $"{dictionaryList[randomIndex].Trim()}";
                 }
                 else
-                    currentWord = storyWords[storyIndex][wordListIndex].Trim();
+                    currentWord = $"{storyWords[storyIndex][wordListIndex].Trim()}";
 
                 // If we need to add "A" or "An", do it here
                 if (articleTweak == true && wasCapital == false)
                 {
                     if ("aeiou".Contains(char.ToLowerInvariant(currentWord[0])))
                     {
-                        currentWord = $"an {currentWord}";
+                        currentWord = "an " +currentWord;
                     }
                     else
                     {
-                        currentWord = $"a {currentWord}";
+                        currentWord = "a " + currentWord;
                     }
                 }
                 else if (articleTweak == true && wasCapital == true)
                 {
                     if ("aeiou".Contains(char.ToLowerInvariant(currentWord[0])))
                     {
-                        currentWord = $"An {currentWord}";
+                        currentWord = "An " + currentWord;
                     }
                     else
                     {
-                        currentWord = $"A {currentWord}";
+                        currentWord = "A " + currentWord;
                     }
                 }
 
                 if (string.IsNullOrEmpty(currentWord) || string.IsNullOrWhiteSpace(currentWord))
                 {
                     // If it's just a whitespace, empty, or null somehow, we can skip it
-                }
-                else if ("!.?".Contains(currentWord))
-                {
-                    writeOut.Write(currentWord);
-                    writeOut.WriteLine();
                 }
                 else if (wordListIndex + 1 < storyWords[storyIndex].Count)
                 {
@@ -162,6 +153,11 @@ class Program
                 }
                 else
                     writeOut.Write(currentWord + " ");
+                // If we have a line ending punctuation present, drop in a new line so it's easier to read as a text file
+                if (currentWord.EndsWith('.') || currentWord.EndsWith('!') || currentWord.EndsWith('?'))
+                {
+                    writeOut.Write("\n");
+                }
             }
         }
     }

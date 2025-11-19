@@ -5,4 +5,4 @@ I like to spend my time swimming::present-tense-verb or running::present-tense-v
 When parents go on a vacation, they spend their time eating three cabbages::plural_noun a day, and fathers golfed::past-tense-verb, and mothers sit around knitting::present-tense-verb. 
 Last summer, my little brother fell in a well::noun and got poison ivy::noun all over his body. 
 My family is going to go to town::noun and I will practice pickpocketing::present-tense-verb. 
-Parents need vacations more than kids because parents are always very stressed::adjective because they have to work 12 hours every day all year making enough dough::plural_noun to pay for the vacation.
+Parents need vacations more than kids because parents are always very stressed::adjective because they have to work 12 hours every day all year making enough dough::plural_noun to pay for the vacation. 
