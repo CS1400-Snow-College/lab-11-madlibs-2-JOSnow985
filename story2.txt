@@ -1,7 +1,7 @@
-A remote::adjective village of fisherpeople::plural-noun had a problem with losing::verb ships::plural-noun. 
+A remote::adjective village of fisherpeople::plural-noun had a problem with losing::present-tense-verb ships::plural-noun. 
 Those that survived::past-tense-verb the tragedies described menacing::adjective eyes in the fog, that chased::past-tense-verb them through the thick::adjective fog.
 After another ship was destroyed, the villagers::plural-noun had had enough, and set out to search::verb for whatever those eyes belonged to.
-When the brave::adjective hunters saw the terrifying::adjective eyes cutting::verb through the fog with their piercing::adjective red::adjective light, they didn't turn back.
+When the brave::adjective hunters saw the terrifying::adjective eyes cutting::present-tense-verb through the fog with their piercing::adjective red::adjective light, they didn't turn back.
 As they sailed::past-tense-verb toward the lights, their intimidating::adjective size diminished, until they saw the culprit on a tiny::adjective island shore.
 A small:adjective, cute::adjective crab::noun sidled::past-tense-verb along the shore. 
 His eyes glowed::past-tense-verb in the night, their brightness unnaturally amplified::adjective by the many shiny::adjective rocks::plural-noun on the beach.

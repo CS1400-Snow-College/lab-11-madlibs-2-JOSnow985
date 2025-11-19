@@ -93,25 +93,75 @@ class Program
             using StreamWriter writeOut = new StreamWriter($"generatedstory{storyIndex + 1}.txt", append: false);
             for (int wordListIndex = 0; wordListIndex < storyWords[storyIndex].Count; wordListIndex++)
             {
+                string currentWord = "";
+                bool articleTweak = false;
+                bool wasCapital = false;
+                // If we're about to write a, an, or A, An, store that and check the next word for which it should be
+                if (storyWords[storyIndex][wordListIndex] == "a" || storyWords[storyIndex][wordListIndex] == "an")
+                {
+                    articleTweak = true;
+                    wordListIndex++;
+                    wasCapital = false;
+                }
+                else if (storyWords[storyIndex][wordListIndex] == "A" || storyWords[storyIndex][wordListIndex] == "An")
+                {
+                    articleTweak = true;
+                    wordListIndex++;
+                    wasCapital = true;
+                }
+                
+                // Check if the word we're looking at matches a key in the dictionary
+                // If It does, we want to randomly choose a replacement word and supply that word to be written to the file 
                 if (wordCategories.TryGetValue(storyWords[storyIndex][wordListIndex], out List<string>? dictionaryList))
                 {
                     int randomIndex = rng.Next(0, dictionaryList.Count);
-                    storyWords[storyIndex][wordListIndex] = dictionaryList[randomIndex];
+                    currentWord = dictionaryList[randomIndex].Trim();
+                }
+                else
+                    currentWord = storyWords[storyIndex][wordListIndex].Trim();
+
+                // If we need to add "A" or "An", do it here
+                if (articleTweak == true && wasCapital == false)
+                {
+                    if ("aeiou".Contains(char.ToLowerInvariant(currentWord[0])))
+                    {
+                        currentWord = $"an {currentWord}";
+                    }
+                    else
+                    {
+                        currentWord = $"a {currentWord}";
+                    }
+                }
+                else if (articleTweak == true && wasCapital == true)
+                {
+                    if ("aeiou".Contains(char.ToLowerInvariant(currentWord[0])))
+                    {
+                        currentWord = $"An {currentWord}";
+                    }
+                    else
+                    {
+                        currentWord = $"A {currentWord}";
+                    }
                 }
 
-                if (storyWords[storyIndex][wordListIndex] == " ")
+                if (string.IsNullOrEmpty(currentWord) || string.IsNullOrWhiteSpace(currentWord))
                 {
-                    // If it's just a whitespace somehow, we can skip it
+                    // If it's just a whitespace, empty, or null somehow, we can skip it
+                }
+                else if ("!.?".Contains(currentWord))
+                {
+                    writeOut.Write(currentWord);
+                    writeOut.WriteLine();
                 }
                 else if (wordListIndex + 1 < storyWords[storyIndex].Count)
                 {
                     if ("!,.".Contains(storyWords[storyIndex][wordListIndex + 1]))
-                        writeOut.Write(storyWords[storyIndex][wordListIndex].Trim());
+                        writeOut.Write(currentWord);
                     else
-                        writeOut.Write(storyWords[storyIndex][wordListIndex].Trim() + " ");
+                        writeOut.Write(currentWord + " ");
                 }
                 else
-                    writeOut.Write(storyWords[storyIndex][wordListIndex].Trim() + " ");
+                    writeOut.Write(currentWord + " ");
             }
         }
     }
