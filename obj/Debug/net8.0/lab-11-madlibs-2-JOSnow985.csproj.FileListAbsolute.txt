@@ -1,0 +1,15 @@
+/home/nobaraneko/Documents/CS1400/lab-11-madlibs-2-JOSnow985/bin/Debug/net8.0/lab-11-madlibs-2-JOSnow985
+/home/nobaraneko/Documents/CS1400/lab-11-madlibs-2-JOSnow985/bin/Debug/net8.0/lab-11-madlibs-2-JOSnow985.deps.json
+/home/nobaraneko/Documents/CS1400/lab-11-madlibs-2-JOSnow985/bin/Debug/net8.0/lab-11-madlibs-2-JOSnow985.runtimeconfig.json
+/home/nobaraneko/Documents/CS1400/lab-11-madlibs-2-JOSnow985/bin/Debug/net8.0/lab-11-madlibs-2-JOSnow985.dll
+/home/nobaraneko/Documents/CS1400/lab-11-madlibs-2-JOSnow985/bin/Debug/net8.0/lab-11-madlibs-2-JOSnow985.pdb
+/home/nobaraneko/Documents/CS1400/lab-11-madlibs-2-JOSnow985/obj/Debug/net8.0/lab-11-madlibs-2-JOSnow985.GeneratedMSBuildEditorConfig.editorconfig
+/home/nobaraneko/Documents/CS1400/lab-11-madlibs-2-JOSnow985/obj/Debug/net8.0/lab-11-madlibs-2-JOSnow985.AssemblyInfoInputs.cache
+/home/nobaraneko/Documents/CS1400/lab-11-madlibs-2-JOSnow985/obj/Debug/net8.0/lab-11-madlibs-2-JOSnow985.AssemblyInfo.cs
+/home/nobaraneko/Documents/CS1400/lab-11-madlibs-2-JOSnow985/obj/Debug/net8.0/lab-11-madlibs-2-JOSnow985.csproj.CoreCompileInputs.cache
+/home/nobaraneko/Documents/CS1400/lab-11-madlibs-2-JOSnow985/obj/Debug/net8.0/lab-11-madlibs-2-JOSnow985.sourcelink.json
+/home/nobaraneko/Documents/CS1400/lab-11-madlibs-2-JOSnow985/obj/Debug/net8.0/lab-11-madlibs-2-JOSnow985.dll
+/home/nobaraneko/Documents/CS1400/lab-11-madlibs-2-JOSnow985/obj/Debug/net8.0/refint/lab-11-madlibs-2-JOSnow985.dll
+/home/nobaraneko/Documents/CS1400/lab-11-madlibs-2-JOSnow985/obj/Debug/net8.0/lab-11-madlibs-2-JOSnow985.pdb
+/home/nobaraneko/Documents/CS1400/lab-11-madlibs-2-JOSnow985/obj/Debug/net8.0/lab-11-madlibs-2-JOSnow985.genruntimeconfig.cache
+/home/nobaraneko/Documents/CS1400/lab-11-madlibs-2-JOSnow985/obj/Debug/net8.0/ref/lab-11-madlibs-2-JOSnow985.dll
