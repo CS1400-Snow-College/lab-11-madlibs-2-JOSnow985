@@ -2,7 +2,7 @@ A vacation is when you take a trip to some incredible::adjective place with your
 Usually, you go to some place that is near the ocean::noun or up on a mountain::noun. 
 A good vacation place is one where you can ride horses::plural_noun or play games or go hunting::verb for snipes::plural_noun. 
 I like to spend my time swimming::verb or running::verb. 
-When parents go on a vacation, they spend their time eating three cabbages::plural_noun a day, and fathers golf::verb, and mothers sit around knitting::verb. 
+When parents go on a vacation, they spend their time eating three cabbages::plural_noun a day, and fathers golfed::past-tense-verb, and mothers sit around knitting::verb. 
 Last summer, my little brother fell in a well::noun and got poison ivy::noun all over his body. 
 My family is going to go to town::noun and I will practice pickpocketing::verb. 
 Parents need vacations more than kids because parents are always very stressed::adjective because they have to work 12 hours every day all year making enough dough::plural_noun to pay for the vacation.
