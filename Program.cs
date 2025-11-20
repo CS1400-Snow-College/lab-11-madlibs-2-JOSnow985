@@ -1,4 +1,5 @@
 ﻿// Jaden Olvera, CS-1400, Lab 11 madlibs 2
+using System.Diagnostics;
 using System.Text;
 
 class Program
@@ -22,67 +23,20 @@ class Program
             // Processing each list of words
             for (int wordListIndex = 0; wordListIndex < storyWords[storyIndex].Count; wordListIndex++)
             {
-                // If the word we're looking at contains a :, the word and key need to be in the dictionary
+                // If the word we're looking at contains a :, the word and key need extracted to the dictionary
                 if (storyWords[storyIndex][wordListIndex].Contains(':'))
-                {
-                    bool foundKeyStart = false;
-                    StringBuilder buildWordToAdd = new();
-                    StringBuilder buildKeyToAdd = new();
-                    for (int letterIndex = 0; letterIndex < storyWords[storyIndex][wordListIndex].Length; letterIndex++)
-                    {
-                        // If we haven't found the separator to indicate where the key begins
-                        if (foundKeyStart == false)
-                        {
-                            // Is the character the start of the key? If not, append it to the word for the dictionary
-                            if (storyWords[storyIndex][wordListIndex][letterIndex] != ':')
-                            {
-                                buildWordToAdd.Append(storyWords[storyIndex][wordListIndex][letterIndex]);
-                            }
-                            // If it is the start of the key separator, change bool to true to switch over to key processing
-                            else if (storyWords[storyIndex][wordListIndex][letterIndex] == ':')
-                            {
-                                foundKeyStart = true;
-                            }
-                        }
-                        else if (foundKeyStart == true)
-                        {
-                            // Check if we're still in the separator
-                            if (storyWords[storyIndex][wordListIndex][letterIndex] != ':')
-                            {
-                                // If we are looking at punctuation, split that off to it's own string so it's not in our key
-                                if (".,! ".Contains(storyWords[storyIndex][wordListIndex][letterIndex]))
-                                {
-                                    // buildWordToAdd.Append(storyWords[storyIndex][wordListIndex][letterIndex]);
-                                    storyWords[storyIndex].Insert(wordListIndex + 1, $"{storyWords[storyIndex][wordListIndex][letterIndex]}");
-                                }
-                                // If we aren't looking at punctuation, only thing to do is add it to the key
-                                else
-                                    buildKeyToAdd.Append(storyWords[storyIndex][wordListIndex][letterIndex]);
-                            }
-                        }
-                    }
-                    string wordToAdd = buildWordToAdd.ToString();
-                    string keyToAdd = buildKeyToAdd.ToString();
-                    // Check if the dictionary already has this key in it
-                    // If it does, check if that key already has that word in it
-                    if (wordCategories.ContainsKey(keyToAdd))
-                    {
-                        if (!wordCategories[keyToAdd].Contains(wordToAdd))
-                        {
-                            wordCategories[keyToAdd].Add(wordToAdd);
-                        }
-                    }
-                    else
-                    {
-                        List<string> ListToAdd = [wordToAdd];
-                        wordCategories.Add(keyToAdd, ListToAdd);
-                    }
-                    storyWords[storyIndex][wordListIndex] = keyToAdd;
-                }
+                    madlibExtractor(storyWords, wordCategories, storyIndex, wordListIndex);
             }
         }
-
-        Random rng = new();
+        
+        // Dictionary should not be empty
+        Debug.Assert(wordCategories.Count != 0);
+        // Dictionary should have a key for past-tense-verb from the first story
+        Debug.Assert(wordCategories.ContainsKey("past-tense-verb"));
+        // But it should not have one that includes the punctuation after it
+        Debug.Assert(wordCategories.ContainsKey("plural-noun.") == false);
+        // It should include the word jeered in the past-tense-verb list
+        Debug.Assert(wordCategories["past-tense-verb"].Contains("jeered"));
 
         for (int storyIndex = 0; storyIndex < storyWords.Count; storyIndex++)
         {
@@ -108,20 +62,14 @@ class Program
 
                 // Check if the word we're looking at matches a key in the dictionary
                 // If It does, we want to randomly choose a replacement word and supply that word to be written to the file 
-                if (wordCategories.TryGetValue(storyWords[storyIndex][wordListIndex], out List<string>? dictionaryList))
-                {
-                    int randomIndex = rng.Next(0, dictionaryList.Count);
-                    currentWord = $"{dictionaryList[randomIndex].Trim()}";
-                }
-                else
-                    currentWord = $"{storyWords[storyIndex][wordListIndex].Trim()}";
+                currentWord = wordSelector(wordCategories, storyWords[storyIndex][wordListIndex]);
 
                 // If we need to add "A" or "An", do it here
                 if (articleTweak == true && wasCapital == false)
                 {
                     if ("aeiou".Contains(char.ToLowerInvariant(currentWord[0])))
                     {
-                        currentWord = "an " +currentWord;
+                        currentWord = "an " + currentWord;
                     }
                     else
                     {
@@ -159,6 +107,69 @@ class Program
                     writeOut.Write("\n");
                 }
             }
+        }
+
+        // Methods
+        static void madlibExtractor(List<List<string>> storyList, Dictionary<string, List<string>> dictionary, int listIndex, int stringIndex)
+        {
+            bool foundKeyStart = false;
+            StringBuilder buildWordToAdd = new();
+            StringBuilder buildKeyToAdd = new();
+            for (int letterIndex = 0; letterIndex < storyList[listIndex][stringIndex].Length; letterIndex++)
+            {
+                // If we haven't found the separator to indicate where the key begins
+                if (foundKeyStart == false)
+                {
+                    // Is the character the start of the key? If not, append it to the word for the dictionary
+                    if (storyList[listIndex][stringIndex][letterIndex] != ':')
+                        buildWordToAdd.Append(storyList[listIndex][stringIndex][letterIndex]);
+                    // If it is the start of the key separator, change bool to true to switch over to key processing
+                    else if (storyList[listIndex][stringIndex][letterIndex] == ':')
+                        foundKeyStart = true;
+                }
+                else if (foundKeyStart == true)
+                {
+                    // Check if we're still in the separator
+                    if (storyList[listIndex][stringIndex][letterIndex] != ':')
+                    {
+                        // If we are looking at punctuation, split that off to it's own string so it's not in our key
+                        if (".,! ".Contains(storyList[listIndex][stringIndex][letterIndex]))
+                            storyList[listIndex].Insert(stringIndex + 1, $"{storyList[listIndex][stringIndex][letterIndex]}");
+                        // If we aren't looking at punctuation, only thing to do is add it to the key
+                        else
+                            buildKeyToAdd.Append(storyList[listIndex][stringIndex][letterIndex]);
+                    }
+                }
+            }
+            string wordToAdd = buildWordToAdd.ToString();
+            string keyToAdd = buildKeyToAdd.ToString();
+            // Check if the dictionary already has this key in it
+            // If it does, check if that key already has that word in it
+            if (dictionary.ContainsKey(keyToAdd))
+            {
+                if (!dictionary[keyToAdd].Contains(wordToAdd))
+                {
+                    dictionary[keyToAdd].Add(wordToAdd);
+                }
+            }
+            else
+            {
+                List<string> ListToAdd = [wordToAdd];
+                dictionary.Add(keyToAdd, ListToAdd);
+            }
+            storyList[listIndex][stringIndex] = keyToAdd;
+        }
+
+        static string wordSelector(Dictionary<string, List<string>> dictionary, string stringToCheck)
+        {
+            Random rng = new();
+            if (dictionary.TryGetValue(stringToCheck, out List<string>? dictionaryList))
+            {
+                int randomIndex = rng.Next(0, dictionaryList.Count);
+                return $"{dictionaryList[randomIndex].Trim()}";
+            }
+            else
+                return $"{stringToCheck.Trim()}";
         }
     }
 }
